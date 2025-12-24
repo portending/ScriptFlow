@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>ScriptFlow Editor</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<link rel="stylesheet" href="editor.css" />
+</head>
+
+<body>
+	<div class="header">
+		<div class="header-left">
+			<h1>ScriptFlow Editor</h1>
+			<p>Create and edit code with ease.</p>
+		</div>
+		<div class="header-actions">
+			<button id="gitSyncBtn" class="btn btn-secondary btn-with-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<line x1="6" y1="3" x2="6" y2="15"></line>
+					<circle cx="18" cy="6" r="3"></circle>
+					<circle cx="6" cy="18" r="3"></circle>
+					<path d="M18 9a9 9 0 0 1-9 9"></path>
+				</svg>
+				<span>Github</span>
+			</button>
+			<button id="loadWorkspaceBtn" class="btn btn-with-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+				</svg>
+				<span>Workspace</span>
+			</button>
+      <button id="customizeBtn" class="view-toggle-btn" title="Customize Background">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="13.5" cy="6.5" r=".5"></circle>
+          <circle cx="17.5" cy="10.5" r=".5"></circle>
+          <circle cx="8.5" cy="7.5" r=".5"></circle>
+          <circle cx="6.5" cy="12.5" r=".5"></circle>
+          <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path>
+        </svg>
+      </button>
+			<button id="explorerToggleBtn" class="view-toggle-btn" title="Toggle File Explorer (Ctrl+B)">
+				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+				</svg>
+			</button>
+			<button id="settingsBtn" class="view-toggle-btn" title="Editor Settings">
+				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="3"></circle>
+					<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+				</svg>
+			</button>
+		</div>
+	</div>
+
+	<div class="editor-container">
+		<div class="file-explorer-sidebar" aria-label="File Explorer Sidebar">
+			<div class="sidebar-tabs">
+				<button class="sidebar-tab active" data-tab="files">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+						<polyline points="13 2 13 9 20 9"></polyline>
+					</svg>
+					<span>Files</span>
+				</button>
+				<button class="sidebar-tab" data-tab="source-control" style="display:none;">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<line x1="6" y1="3" x2="6" y2="15"></line>
+						<circle cx="18" cy="6" r="3"></circle>
+						<circle cx="6" cy="18" r="3"></circle>
+						<path d="M18 9a9 9 0 0 1-9 9"></path>
+					</svg>
+					<span>Source Control</span>
+				</button>
+			</div>
+			<div class="tab-content" data-tab-content="files">
+				<div class="file-explorer-header">
+					<span>EXPLORER</span>
+					<div class="explorer-actions">
+						<button id="newFileBtn" title="New File (Ctrl+N)" aria-label="New File">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+								<polyline points="14 2 14 8 20 8"></polyline>
+								<line x1="12" y1="18" x2="12" y2="12"></line>
+								<line x1="9" y1="15" x2="15" y2="15"></line>
+							</svg>
+						</button>
+						<button id="newFolderBtn" title="New Folder" aria-label="New Folder">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+								<line x1="12" y1="11" x2="12" y2="17"></line>
+								<line x1="9" y1="14" x2="15" y2="14"></line>
+							</svg>
+						</button>
+					</div>
+				</div>
+				<ul id="fileTree" class="file-tree"></ul>
+			</div>
+			<div class="tab-content" data-tab-content="source-control" style="display:none;">
+				<div id="sourceControlPanel"></div>
+			</div>
+		</div>
+
+		<div class="sidebar" aria-label="Metadata Sidebar">
+			<div class="sidebar-section">
+				<h3 class="sidebar-section-title">Script Details</h3>
+				<div class="form-group">
+					<label class="form-label">Script Name</label>
+					<input type="text" class="form-input" id="scriptName" placeholder="My Folder/My Script">
+					<small class="form-hint">Use / to organize scripts in folders</small>
+				</div>
+				<div class="form-group">
+					<label class="form-label">Description</label>
+					<textarea class="form-input form-textarea" id="scriptDescription" placeholder="What does this script do?" rows="3"></textarea>
+				</div>
+			</div>
+
+			<div class="sidebar-section">
+				<h3 class="sidebar-section-title">Execution</h3>
+				<div class="form-group">
+					<label class="form-label">Run At</label>
+					<select class="form-input" id="scriptRunAt">
+						<option value="document_idle">Document Idle (recommended)</option>
+						<option value="document_start">Document Start</option>
+						<option value="document_end">Document End</option>
+					</select>
+					<small class="form-hint">When should this script execute on the page?</small>
+				</div>
+			</div>
+
+			<div class="sidebar-section">
+				<h3 class="sidebar-section-title">URL Patterns</h3>
+				<div class="matches-container" id="matchesContainer">
+					<div class="match-item empty-state">
+						<span>No patterns added yet</span>
+					</div>
+				</div>
+				<div class="add-match">
+					<input type="text" id="newMatch" placeholder="https://example.com/*" class="add-match-input">
+					<button id="addMatchBtn" class="add-match-btn" aria-label="Add Pattern">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<line x1="12" y1="5" x2="12" y2="19"></line>
+							<line x1="5" y1="12" x2="19" y2="12"></line>
+						</svg>
+					</button>
+				</div>
+				<small class="form-hint">Use * as wildcard. Example: https://*.google.com/*</small>
+			</div>
+
+			<div class="sidebar-section">
+				<div class="checkbox-group">
+					<input type="checkbox" id="scriptEnabled" checked>
+					<label for="scriptEnabled">Enable this script</label>
+				</div>
+			</div>
+
+			<div class="sidebar-section">
+				<h3 class="sidebar-section-title">Quick Templates</h3>
+				<div class="template-selector">
+					<button class="template-btn" data-template="basic">
+						<span class="template-icon">📄</span>
+						<span>Basic Script</span>
+					</button>
+					<button class="template-btn" data-template="dom">
+						<span class="template-icon">🎨</span>
+						<span>DOM Manipulation</span>
+					</button>
+					<button class="template-btn" data-template="ajax">
+						<span class="template-icon">🌐</span>
+						<span>AJAX Interceptor</span>
+					</button>
+					<button class="template-btn" data-template="css">
+						<span class="template-icon">💅</span>
+						<span>CSS Injection</span>
+					</button>
+					<button class="template-btn" data-template="utility">
+						<span class="template-icon">🔧</span>
+						<span>Utility Functions</span>
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="editor-main" role="main">
+			<div id="editor-wrapper">
+				<div class="editor-toolbar">
+					<div class="editor-info">
+						<span id="lineCount">1 line</span>
+						<span class="separator">•</span>
+						<span id="charCount">0 characters</span>
+					</div>
+					<div class="editor-actions" aria-hidden="false">
+						<button class="btn btn-secondary" id="formatBtn" title="Format Code (Ctrl+H)">Format</button>
+						<button class="btn btn-secondary" id="exportZipBtn" title="Export as ZIP">Export ZIP</button>
+            <button class="btn btn-secondary" id="pullMultiFileBtn" style="display:none;" title="Pull from GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="8 17 12 21 16 17"></polyline>
+                    <line x1="12" y1="12" x2="12" y2="21"></line>
+                    <path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"></path>
+                </svg>
+                <span>Pull</span>
+            </button>
+            <button class="btn btn-success" id="pushMultiFileBtn" style="display:none;" title="Push to GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="16 16 12 12 8 16"></polyline>
+                    <line x1="12" y1="12" x2="12" y2="21"></line>
+                    <path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"></path>
+                </svg>
+                <span>Push</span>
+            </button>
+						<button class="btn btn-success" id="saveBtn" title="Save (Ctrl+S)">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+								<polyline points="17 21 17 13 7 13 7 21"></polyline>
+								<polyline points="7 3 7 8 15 8"></polyline>
+							</svg>
+							<span>Save</span>
+						</button>
+						<button class="btn btn-success" id="saveMultiFileBtn" style="display:none;">Save as MultiFile</button>
+					</div>
+				</div>
+				<div id="codeEditorContainer"></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="status-bar-container">
+		<div class="status-bar">
+			<div class="status-left">
+				<span id="statusText">Ready</span>
+			</div>
+			<div class="status-center">
+				<kbd class="kbd">Ctrl</kbd><span>+</span><kbd class="kbd">[</kbd><span> Command Palette</span>
+			</div>
+			<div class="status-right">
+				<span class="version-badge">v1.16.3</span>
+			</div>
+		</div>
+		<div class="command-bar" id="commandBar">
+			<input type="text" id="commandInput" placeholder="Search or execute command...">
+		</div>
+	</div>
+
+	<div id="gitModal" class="modal-overlay">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2>Git Workspace Sync</h2>
+				<button id="gitModalCloseBtn" class="modal-close-btn">&times;</button>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label for="repoUrl" class="form-label">Repository HTTPS URL</label>
+					<input type="text" id="repoUrl" class="form-input" placeholder="https://github.com/user/repo.git">
+					<div id="repoHistoryDropdownContainer" style="position: relative; margin-top: -1px;">
+						<select id="repoHistorySelect" style="display: none; width: 100%; position: absolute; top: 0; left: 0; z-index: 10; border-radius: 0 0 8px 8px; border: 1px solid var(--border); background: var(--panel); color: var(--text); font-size: 13px;">
+							<option value="">Select from history...</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="branch" class="form-label">Branch</label>
+					<input type="text" id="branch" class="form-input" value="main">
+				</div>
+				<div class="form-group">
+					<label for="token" class="form-label">Github Token (PAT)</label>
+					<input type="password" id="token" class="form-input" placeholder="github_pat_...">
+				</div>
+				<div>
+					<label class="form-label">Logs</label>
+					<div class="log-box">
+						<pre id="gitLogs" class="text-sm"></pre>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button id="gitCloneBtn" class="btn">Clone</button>
+				<button id="gitPullBtn" class="btn btn-secondary">Pull</button>
+				<button id="gitPushBtn" class="btn btn-success">Push</button>
+				<div class="modal-divider"></div>
+        <button id="configureGithubBtn" class="btn">Configure Repo</button>
+				<button id="gitInitPushBtn" class="btn">Push Workspace</button>
+			</div>
+		</div>
+	</div>
+
+	<div id="settingsModal" class="modal-overlay">
+		<div class="modal-content settings-modal-content">
+			<div class="modal-header">
+				<h2>Editor Settings</h2>
+				<button id="settingsModalCloseBtn" class="modal-close-btn">&times;</button>
+			</div>
+			<div class="modal-body">
+				<div class="settings-section-title">Appearance</div>
+				<div class="settings-group">
+					<label for="setting_theme">Theme</label>
+					<select id="setting_theme" class="settings-input">
+						<option value="dracula">Dracula</option>
+						<option value="monokai">Monokai</option>
+						<option value="vs-dark">VS Dark</option>
+						<option value="solarized-light">Solarized Light</option>
+						<option value="vs">VS Light</option>
+					</select>
+				</div>
+				<div class="settings-group">
+					<label for="setting_fontSize">Font Size (px)</label>
+					<input type="number" id="setting_fontSize" class="settings-input" min="10" max="30">
+				</div>
+
+				<div class="settings-section-title">Behavior</div>
+				<div class="settings-group">
+					<label for="setting_tabSize">Tab Size</label>
+					<input type="number" id="setting_tabSize" class="settings-input" min="2" max="8">
+				</div>
+				<div class="settings-group">
+					<label for="setting_lineNumbers">Line Numbers</label>
+					<select id="setting_lineNumbers" class="settings-input">
+						<option value="on">On</option>
+						<option value="off">Off</option>
+						<option value="relative">Relative</option>
+					</select>
+				</div>
+				<div class="settings-group">
+					<label for="setting_runAt">Default Run At</label>
+					<select id="setting_runAt" class="settings-input">
+						<option value="document_start">Document Start</option>
+						<option value="document_end">Document End</option>
+						<option value="document_idle">Document Idle</option>
+					</select>
+				</div>
+				<div class="settings-group settings-checkbox">
+					<input type="checkbox" id="setting_minimap">
+					<label for="setting_minimap">Enable Minimap</label>
+				</div>
+        <div class="settings-group settings-checkbox">
+            <label>
+                <input type="checkbox" id="setting_useCorsProxy">
+                Use CORS Proxy
+            </label>
+        </div>
+				<div class="settings-group settings-checkbox">
+					<input type="checkbox" id="setting_wordWrap">
+					<label for="setting_wordWrap">Enable Word Wrap</label>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button id="cancelSettingsBtn" class="btn btn-secondary">Cancel</button>
+				<button id="saveSettingsBtn" class="btn btn-success">Save Settings</button>
+			</div>
+		</div>
+	</div>
+
+	<div id="fileContextMenu" class="context-menu" style="display: none;">
+		<div class="context-menu-item" id="previewContextBtn">
+			<span class="context-menu-icon">👁</span>
+			<span>Preview HTML</span>
+		</div>
+		<div class="context-menu-item" id="setEntryBtn">
+			<span class="context-menu-icon">⭐</span>
+			<span>Set as Entry Point</span>
+		</div>
+		<div class="context-menu-item" id="unsetEntryBtn">
+			<span class="context-menu-icon">⭕</span>
+			<span>Unset Entry Point</span>
+		</div>
+		<div class="context-menu-divider"></div>
+		<div class="context-menu-item" id="newFileContextBtn">
+			<span class="context-menu-icon">📄</span>
+			<span>New File</span>
+		</div>
+		<div class="context-menu-item" id="newImageContextBtn">
+			<span class="context-menu-icon">🖼️</span>
+			<span>Add Image</span>
+		</div>
+		<div class="context-menu-item" id="newFolderContextBtn">
+			<span class="context-menu-icon">📁</span>
+			<span>New Folder</span>
+		</div>
+		<div class="context-menu-divider"></div>
+		<div class="context-menu-item" id="renameBtn">
+			<span class="context-menu-icon">✏️</span>
+			<span>Rename</span>
+		</div>
+		<div class="context-menu-item danger" id="deleteBtn">
+			<span class="context-menu-icon">🗑️</span>
+			<span>Delete</span>
+		</div>
+	</div>
+
+	<div id="commandPaletteOverlay" class="modal-overlay">
+		<div class="command-palette-content">
+			<div class="command-palette-header">
+				<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+					stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="11" cy="11" r="8"></circle>
+					<path d="m21 21-4.35-4.35"></path>
+				</svg>
+				<input type="text" id="commandPaletteInput" placeholder="Type a command or search...">
+			</div>
+			<div id="commandPaletteList"></div>
+		</div>
+	</div>
+
+  <div id="customizeModal" class="modal-overlay">
+    <div class="modal-content settings-modal-content">
+      <div class="modal-header">
+        <h2>🎨 Background Customization</h2>
+        <button id="customizeModalCloseBtn" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="settings-section-title">Background Image</div>
+        <div class="settings-group">
+          <label>Upload Image</label>
+          <div class="file-upload-area" id="uploadArea" style="border: 2px dashed var(--border); border-radius: var(--radius); padding: 30px; text-align: center; cursor: pointer; transition: all 0.3s ease; background: rgba(0, 0, 0, 0.2);">
+            <div style="font-size: 48px; margin-bottom: 10px; opacity: 0.6;">📁</div>
+            <div style="color: var(--muted); font-size: 14px;">Click to upload or drag & drop</div>
+            <div style="color: var(--muted); font-size: 12px; margin-top: 8px; opacity: 0.7;">PNG, JPG, GIF up to 10MB</div>
+          </div>
+          <input type="file" id="hiddenFileInput" accept="image/*" style="display: none;">
+          <div id="imagePreview" class="image-preview" style="display: none; margin-top: 15px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); background: rgba(0, 0, 0, 0.3);">
+            <img id="previewImg" src="" alt="Preview" style="width: 100%; height: 200px; object-fit: cover; display: block;">
+          </div>
+        </div>
+
+        <div class="settings-section-title">Background Settings</div>
+        <div class="settings-group">
+          <label for="opacitySlider">Opacity: <span id="opacityValue">30%</span></label>
+          <input type="range" class="settings-input" id="opacitySlider" min="0" max="100" value="30" style="width: 100%; height: 6px; -webkit-appearance: none; appearance: none; background: rgba(255, 255, 255, 0.1); border-radius: 3px; outline: none;">
+        </div>
+
+        <div class="settings-group">
+          <label for="blurSlider">Blur: <span id="blurValue">0px</span></label>
+          <input type="range" class="settings-input" id="blurSlider" min="0" max="20" value="0" style="width: 100%; height: 6px; -webkit-appearance: none; appearance: none; background: rgba(255, 255, 255, 0.1); border-radius: 3px; outline: none;">
+        </div>
+
+        <div class="settings-group">
+          <label for="bgSizeSelect">Background Size</label>
+          <select class="settings-input" id="bgSizeSelect">
+            <option value="cover">Cover (Fill entire screen)</option>
+            <option value="contain">Contain (Fit within screen)</option>
+            <option value="auto">Auto (Original size)</option>
+            <option value="100% 100%">Stretch (Fill and stretch)</option>
+          </select>
+        </div>
+
+        <div class="settings-group">
+          <label for="bgPositionSelect">Background Position</label>
+          <select class="settings-input" id="bgPositionSelect">
+            <option value="center">Center</option>
+            <option value="top">Top</option>
+            <option value="bottom">Bottom</option>
+            <option value="left">Left</option>
+            <option value="right">Right</option>
+            <option value="top left">Top Left</option>
+            <option value="top right">Top Right</option>
+            <option value="bottom left">Bottom Left</option>
+            <option value="bottom right">Bottom Right</option>
+          </select>
+        </div>
+
+        <div class="settings-group settings-checkbox">
+          <input type="checkbox" id="enableBgCheckbox" checked>
+          <label for="enableBgCheckbox">Enable custom background</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+	<div id="notification-container"></div>
+
+	<script src="../../background/beautifier.js"></script>
+	<script src="../../lib/codemirror/jszip.min.js"></script>
+	<script src="../../lib/codemirror/isomorphic-git.min.js"></script>
+	<script src="../../lib/codemirror/isomorphic-git-http.js"></script>
+	<script src="../../lib/codemirror/lightning-fs.min.js"></script>
+	<script src="../../lib/loader.min.js"></script>
+	<script src="editor.js"></script>
+</body>
+
+</html>
