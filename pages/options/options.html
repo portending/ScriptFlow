@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ScriptFlow Options</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="options.css" />
+</head>
+<body>
+  <div class="max-w-6xl mx-auto">
+    <div class="glass-card">
+      <header class="header">
+        <div>
+          <h1 class="text-2xl font-bold">ScriptFlow Options</h1>
+          <p class="mt-1 text-sm text-gray-400">Customize your ScriptFlow experience</p>
+        </div>
+        <div class="settings-icon">
+          <i class="fas fa-cog"></i>
+        </div>
+      </header>
+      
+      <div class="main-container">
+        <aside class="sidebar">
+          <div class="glass-card theme-card">
+            <div class="theme-title">
+              <i class="fas fa-palette"></i>
+              <span>Theme Selection</span>
+            </div>
+            <div class="theme-options">
+              <div class="theme-option active" data-theme="theme-dark-purple">
+                <span class="theme-preview" style="background: linear-gradient(135deg, #6366F1, #8B5CF6);"></span>
+                <span>Dark Purple</span>
+              </div>
+              <div class="theme-option" data-theme="theme-dark-blue">
+                <span class="theme-preview" style="background: linear-gradient(135deg, #3B82F6, #1D4ED8);"></span>
+                <span>Dark Blue</span>
+              </div>
+              <div class="theme-option" data-theme="theme-dark-forest">
+                <span class="theme-preview" style="background: linear-gradient(135deg, #10B981, #047857);"></span>
+                <span>Dark Forest</span>
+              </div>
+              <div class="theme-option" data-theme="theme-midnight">
+                <span class="theme-preview" style="background: linear-gradient(135deg, #0F172A, #1E293B);"></span>
+                <span>Midnight</span>
+              </div>
+              <div class="theme-option" data-theme="theme-amber">
+                <span class="theme-preview" style="background: linear-gradient(135deg, #F59E0B, #B45309);"></span>
+                <span>Amber Dark</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="glass-card theme-card">
+            <div class="theme-title">
+              <i class="fas fa-info-circle"></i>
+              <span>About ScriptFlow</span>
+            </div>
+            <p class="text-sm text-gray-400 mt-2">
+              ScriptFlow is an advanced userscript manager that gives you full control over your browsing experience.
+            </p>
+            <p class="text-sm text-gray-400 mt-2">
+              Version: 2.1.0<br>
+              Created by: Developer Team
+            </p>
+          </div>
+        </aside>
+        
+        <main class="content">
+          <div class="section">
+            <div class="section-header">
+              <div class="section-icon">
+                <i class="fas fa-sliders-h"></i>
+              </div>
+              <h2 class="section-title">General Settings</h2>
+            </div>
+            <div class="section-content">
+              <div class="settings-grid">
+                <div class="setting-card">
+                  <div class="setting-title">
+                    <i class="fas fa-font"></i>
+                    <span>Editor Font Size</span>
+                  </div>
+                  <p class="setting-desc">Set the font size for the code editor</p>
+                  <input type="number" id="editorFontSize" value="14" min="8" max="32" class="setting-input">
+                </div>
+                
+                <div class="setting-card">
+                  <div class="setting-title">
+                    <i class="fas fa-indent"></i>
+                    <span>Tab Size</span>
+                  </div>
+                  <p class="setting-desc">Number of spaces per tab</p>
+                  <input type="number" id="tabSize" value="4" min="1" max="8" class="setting-input">
+                </div>
+                
+                <div class="setting-card">
+                  <div class="toggle-container">
+                    <div class="toggle-label">
+                      <div class="setting-title">
+                        <i class="fas fa-text-width"></i>
+                        <span>Word Wrap</span>
+                      </div>
+                      <p class="setting-desc">Enable word wrapping in the editor</p>
+                    </div>
+                    <label class="toggle-switch">
+                      <input type="checkbox" id="wordWrap" checked>
+                      <span class="slider"></span>
+                    </label>
+                  </div>
+                </div>
+                
+                <div class="setting-card">
+                  <div class="toggle-container">
+                    <div class="toggle-label">
+                      <div class="setting-title">
+                        <i class="fas fa-save"></i>
+                        <span>Auto Save</span>
+                      </div>
+                      <p class="setting-desc">Automatically save scripts as you type</p>
+                    </div>
+                    <label class="toggle-switch">
+                      <input type="checkbox" id="autoSave" checked>
+                      <span class="slider"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="section">
+            <div class="section-header">
+              <div class="section-icon">
+                <i class="fas fa-shield-alt"></i>
+              </div>
+              <h2 class="section-title">Security Settings</h2>
+              <button id="advancedToggle" class="advanced-toggle ml-auto">
+                <i class="fas fa-caret-down"></i>
+                <span>Advanced</span>
+              </button>
+            </div>
+            <div class="section-content">
+              <div class="advanced-content" id="advancedSecurity">
+                <div class="settings-grid">
+                  <div class="setting-card">
+                    <div class="toggle-container">
+                      <div class="toggle-label">
+                        <div class="setting-title">
+                          <i class="fas fa-check-circle"></i>
+                          <span>Confirm Execution</span>
+                        </div>
+                        <p class="setting-desc">Ask for confirmation before running a script</p>
+                      </div>
+                      <label class="toggle-switch">
+                        <input type="checkbox" id="confirmExecution">
+                        <span class="slider"></span>
+                      </label>
+                    </div>
+                  </div>
+                  
+                  <div class="setting-card">
+                    <div class="toggle-container">
+                      <div class="toggle-label">
+                        <div class="setting-title">
+                          <i class="fas fa-ban"></i>
+                          <span>Block Unsafe Scripts</span>
+                        </div>
+                        <p class="setting-desc">Prevent scripts from running on sensitive sites</p>
+                      </div>
+                      <label class="toggle-switch">
+                        <input type="checkbox" id="blockUnsafeScripts" checked>
+                        <span class="slider"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="section">
+            <div class="section-header">
+              <div class="section-icon">
+                <i class="fas fa-database"></i>
+              </div>
+              <h2 class="section-title">Data & Restore</h2>
+            </div>
+            <div class="section-content">
+              <div class="settings-grid">
+                <div class="setting-card">
+                  <div class="setting-title">
+                    <i class="fas fa-file-export"></i>
+                    <span>Export Scripts</span>
+                  </div>
+                  <p class="setting-desc">Download a backup of all your scripts and settings</p>
+                  <button id="exportBtn" class="btn btn-primary w-full mt-2">
+                    <i class="fas fa-download"></i>
+                    Export All Data
+                  </button>
+                </div>
+                
+                <div class="setting-card">
+                  <div class="setting-title">
+                    <i class="fas fa-file-import"></i>
+                    <span>Import Scripts</span>
+                  </div>
+                  <p class="setting-desc">Restore scripts from a backup file</p>
+                  <div class="mt-3 relative">
+                    <input type="file" id="fileInput" accept=".json" class="setting-input py-3 cursor-pointer">
+                    <div class="absolute top-3 right-3 text-gray-400">
+                      <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="reset-section mt-6">
+                <div class="reset-title">
+                  <i class="fas fa-exclamation-triangle"></i>
+                  <span>Reset All Settings</span>
+                </div>
+                <p class="reset-desc">This will reset all options to their default values. Scripts will be preserved.</p>
+                <button id="resetBtn" class="btn btn-danger">
+                  <i class="fas fa-redo"></i>
+                  Reset to Defaults
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="action-buttons">
+            <button id="resetFormBtn" class="btn btn-secondary">
+              <i class="fas fa-undo"></i>
+              Reset Form
+            </button>
+            <button id="saveSettingsBtn" class="btn btn-primary">
+              <i class="fas fa-save"></i>
+              Save Settings
+            </button>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+  
+  <div id="statusMessage" class="status-message">
+    <i class="fas fa-info-circle"></i>
+    <span>Status message appears here</span>
+  </div>
+  
+  <div id="confirmation-dialog" class="confirmation-dialog">
+    <div class="confirmation-content">
+      <div class="confirmation-title">
+        <i class="fas fa-exclamation-circle text-yellow-400"></i>
+        <span>Confirmation Required</span>
+      </div>
+      <p id="confirm-message" class="confirmation-message">Are you sure you want to perform this action?</p>
+      <div class="confirmation-buttons">
+        <button id="confirm-cancel" class="btn btn-secondary">
+          Cancel
+        </button>
+        <button id="confirm-ok" class="btn btn-primary">
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Theme selection
+      const themeOptions = document.querySelectorAll('.theme-option');
+      
+      themeOptions.forEach(option => {
+        option.addEventListener('click', () => {
+          themeOptions.forEach(opt => opt.classList.remove('active'));
+          option.classList.add('active');
+          const themeName = option.dataset.theme;
+          document.body.className = themeName;
+          localStorage.setItem('scriptflow-theme', themeName);
+          
+          // Show status message
+          showStatus(`Theme changed to ${option.querySelector('span:last-child').textContent}`, 'success');
+        });
+      });
+      
+      // Load saved theme
+      const savedTheme = localStorage.getItem('scriptflow-theme') || 'theme-dark-purple';
+      document.body.className = savedTheme;
+      document.querySelector(`.theme-option[data-theme="${savedTheme}"]`).classList.add('active');
+      
+      // Advanced toggle
+      const advancedToggle = document.getElementById('advancedToggle');
+      const advancedContent = document.getElementById('advancedSecurity');
+      
+      advancedToggle.addEventListener('click', () => {
+        const isOpen = advancedContent.classList.toggle('show');
+        advancedToggle.innerHTML = isOpen ? 
+          '<i class="fas fa-caret-up"></i> <span>Hide Advanced</span>' : 
+          '<i class="fas fa-caret-down"></i> <span>Advanced</span>';
+      });
+      
+      // Confirmation dialog
+      function customConfirm(message, callback) {
+        const dialog = document.getElementById('confirmation-dialog');
+        const msg = document.getElementById('confirm-message');
+        const okBtn = document.getElementById('confirm-ok');
+        const cancelBtn = document.getElementById('confirm-cancel');
+        
+        msg.textContent = message;
+        dialog.classList.add('active');
+        
+        const cleanup = () => {
+          dialog.classList.remove('active');
+          okBtn.onclick = null;
+          cancelBtn.onclick = null;
+        };
+        
+        okBtn.onclick = () => {
+          cleanup();
+          callback(true);
+        };
+        
+        cancelBtn.onclick = () => {
+          cleanup();
+          callback(false);
+        };
+      }
+      
+      document.getElementById('resetBtn').addEventListener('click', () => {
+        customConfirm('Are you sure you want to reset all settings to default values?', (result) => {
+          if (result) {
+            showStatus('Settings have been reset to default values', 'success');
+          } else {
+            showStatus('Reset action was cancelled', 'warning');
+          }
+        });
+      });
+      
+      // Status message function
+      function showStatus(message, type = 'info') {
+        const statusElement = document.getElementById('statusMessage');
+        statusElement.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i> <span>${message}</span>`;
+        statusElement.className = `status-message ${type}`;
+        statusElement.classList.add('show');
+        
+        setTimeout(() => {
+          statusElement.classList.remove('show');
+        }, 3000);
+      }
+      
+      // Simulate save functionality
+      document.getElementById('saveSettingsBtn').addEventListener('click', () => {
+        showStatus('Settings saved successfully!', 'success');
+      });
+      
+      document.getElementById('exportBtn').addEventListener('click', () => {
+        showStatus('All data exported successfully!', 'success');
+      });
+      
+      document.getElementById('resetFormBtn').addEventListener('click', () => {
+        showStatus('Form has been reset', 'info');
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>ScriptFlow</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'nonce-1234567890';">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<link rel="stylesheet" href="popup.css" />
+</head>
+
+<body>
+	<div class="header">
+		<h1>ScriptFlow</h1>
+		<p class="subtitle">Manage your custom scripts</p>
+	</div>
+
+	<div class="current-url" id="currentUrl">
+		<div class="url-icon">
+			<i class="fas fa-globe"></i>
+		</div>
+		<div class="url-content">
+			<span class="url-text">Current Page:</span>
+			<span class="url-label">Current page</span>
+		</div>
+	</div>
+
+	<div class="content">
+		<nav class="tabs" role="tablist">
+			<button class="tab active" data-tab="scripts" role="tab" aria-selected="true" aria-controls="scripts-tab">
+				<i class="fas fa-code"></i>
+				<span>Scripts</span>
+			</button>
+			<button class="tab" data-tab="console" role="tab" aria-selected="false" aria-controls="console-tab">
+				<i class="fas fa-terminal"></i>
+				<span>Console</span>
+			</button>
+			<button class="tab" data-tab="settings" role="tab" aria-selected="false" aria-controls="settings-tab">
+				<i class="fas fa-cog"></i>
+				<span>Settings</span>
+			</button>
+		</nav>
+
+		<div class="tab-content active" id="scripts-tab" role="tabpanel">
+			<div class="main-actions">
+				<button class="add-script-btn" id="addScriptBtn">
+					<i class="fas fa-plus"></i>
+					<span>New Script</span>
+				</button>
+			</div>
+			
+			<div id="scriptsList">
+				<div class="empty-state">
+					<div class="empty-icon">
+						<i class="fas fa-code"></i>
+					</div>
+					<h3>No scripts yet</h3>
+					<p>Create your first script to start customizing websites</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="tab-content" id="console-tab" role="tabpanel">
+			<div class="console-container">
+				<label class="console-label">
+					<i class="fas fa-terminal"></i>
+					JavaScript Console
+				</label>
+				<textarea
+					class="console-input"
+					id="consoleInput"
+					placeholder="// Enter JavaScript code&#10;console.log('Hello!');"
+					spellcheck="false"
+					aria-label="JavaScript input"
+				></textarea>
+				<button class="btn btn-primary execute-btn" id="executeBtn">
+					<i class="fas fa-play"></i>
+					<span>Execute</span>
+				</button>
+				<label class="console-label">
+					<i class="fas fa-chevron-right"></i>
+					Output
+				</label>
+				<div class="console-output" id="consoleOutput">Ready to execute JavaScript...</div>
+			</div>
+		</div>
+
+		<div class="tab-content" id="settings-tab" role="tabpanel">
+			<div class="settings-section">
+				<h3 class="section-title">
+					<i class="fas fa-sliders-h"></i>
+					General Settings
+				</h3>
+				
+				<div class="settings-group">
+					<label class="settings-label" for="updateInterval">
+						<i class="fas fa-sync-alt"></i>
+						<span>Auto-update Check</span>
+					</label>
+					<select class="settings-input" id="updateInterval">
+						<option value="never">Never</option>
+						<option value="daily">Daily</option>
+						<option value="weekly" selected>Weekly</option>
+						<option value="monthly">Monthly</option>
+					</select>
+					<small class="settings-hint">How often to check for script updates</small>
+				</div>
+
+				<div class="settings-group">
+					<label class="settings-label" for="executionDelay">
+						<i class="fas fa-clock"></i>
+						<span>Execution Delay (ms)</span>
+					</label>
+					<input type="number" class="settings-input" id="executionDelay" value="0" min="0" max="5000" aria-label="Execution delay in milliseconds">
+					<small class="settings-hint">Delay before executing scripts on page load</small>
+				</div>
+        <div class="settings-group">
+          <label>UserScript Import (ZIP)</label>
+          <div id="tmDropZone" class="tm-drop-zone">
+            Drag a UserScript backup ZIP here or click to select
+            <input id="tmFileInput" type="file" accept=".zip" style="display:none" />
+          </div>
+          <small class="form-hint">
+            Expects Userscript’s ZIP backup with *.user.js, *.options.json, *.storage.json files.
+          </small>
+        </div>
+			</div>
+
+			<div class="settings-section">
+				<h3 class="section-title">
+					<i class="fas fa-tools"></i>
+					Developer Tools
+				</h3>
+
+				<div class="settings-group">
+					<label class="settings-toggle">
+						<div class="toggle-info">
+							<i class="fas fa-bug"></i>
+							<span>Debug Logging</span>
+						</div>
+						<input type="checkbox" id="debugLogging" class="toggle-input">
+						<span class="toggle-slider"></span>
+					</label>
+					<small class="settings-hint">Enable detailed console logging</small>
+				</div>
+
+				<div class="settings-group">
+					<label class="settings-toggle">
+						<div class="toggle-info">
+							<i class="fas fa-microchip"></i>
+							<span>Memory Inspector</span>
+						</div>
+						<input type="checkbox" id="memoryInspector" class="toggle-input">
+						<span class="toggle-slider"></span>
+					</label>
+					<small class="settings-hint">Show memory usage overlay on pages</small>
+				</div>
+
+				<div class="settings-group">
+					<label class="settings-label" for="memoryInspectorPosition">
+						<i class="fas fa-arrows-alt"></i>
+						<span>Memory Inspector Position</span>
+					</label>
+					<select class="settings-input" id="memoryInspectorPosition">
+						<option value="top-left">Top Left</option>
+						<option value="top-right" selected>Top Right</option>
+						<option value="bottom-left">Bottom Left</option>
+						<option value="bottom-right">Bottom Right</option>
+					</select>
+					<small class="settings-hint">Position of the memory overlay on the page</small>
+				</div>
+
+			<div class="settings-footer">
+				<p>ScriptFlow v1.16.3</p>
+			</div>
+		</div>
+	</div>
+
+  <script src="../../lib/codemirror/jszip.min.js"></script>
+	<script nonce="1234567890" src="popup.js"></script>
+
+</body>
+
+</html>
